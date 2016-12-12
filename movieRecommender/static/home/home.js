@@ -17,10 +17,18 @@ function loadData()
         userid:userID,
         },
         function(response){
-            if (response.status) {
-                updateHTML(response.data);
+            if (response.status == -1) {
+                updateHTMLForNoHistory(response.data);
+                showLeftTab();
+                $('.logout').removeClass("hide").addClass('show');
                 NProgress.done();
-                }
+            }
+            else if (response.status) {
+                updateHTML(response.data);
+                showTabs();
+                $('.logout').removeClass("hide").addClass('show');
+                NProgress.done();
+            }
             else {
                 $('#errorDiv').show();
                 $('#errorDiv span').text(response.data)
@@ -29,6 +37,15 @@ function loadData()
              }
         });
 };
+
+function updateHTMLForNoHistory(data)
+{
+    $('.nohistorypresent').children().html(data);
+    $('.nohistorypresent').removeClass("hide").addClass('show');
+    showTabs();
+    hideMoviesList();
+}
+
 
 function createData(data)
 {
@@ -45,6 +62,37 @@ function createData(data)
     return myData;
 }
 
+function showTabs()
+{
+    $('#frame1').removeClass("hide").addClass('show');
+    $('#frame2').removeClass("hide").addClass('show');
+    showMoviesList();
+    $('#tabs').removeClass("hide").addClass('show').addClass('fadeInAnimation');
+}
+
+function showLeftTab()
+{
+    $('#frame1').removeClass("hide").addClass('show');
+    $('#tabs').removeClass("hide").addClass('show').addClass('fadeInAnimation');
+}
+
+function showRightTab()
+{
+    $('#frame2').removeClass("hide").addClass('show');
+    showMoviesList();
+    $('#tabs').removeClass("hide").addClass('show').addClass('fadeInAnimation');
+}
+
+function hideMoviesList()
+{
+    $('#movieListContainer').removeClass("show").addClass('hide');
+}
+
+function showMoviesList()
+{
+    $('#movieListContainer').removeClass("hide").addClass('show');
+}
+
 function updateHTML(data,name) {
 
 
@@ -53,8 +101,7 @@ function updateHTML(data,name) {
     $.get("/static/html_templates/movieTemplate.html", null, function (movieTemplate) {
 
             // Render the books using the remote template
-            $.tmpl(movieTemplate, data).appendTo("#movieTable");
+            $.tmpl(movieTemplate, data).appendTo("#movieTable tbody");
+            $('tr:even:not(:first)').addClass('alt')
     });
-
-    $('#tabs').removeClass("hide").addClass('show').addClass('fadeInAnimation');
 }

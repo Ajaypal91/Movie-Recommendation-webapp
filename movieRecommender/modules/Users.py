@@ -5,11 +5,12 @@ import movieRecommender.DAO.userDAO as UD
 reload(UD)
 
 class User(object) :
-    def __init__(self) :
+    def __init__(self, user=None,passwd=None) :
         self.name = None
-        self.user = None
+        self.user = user
         self.userHist = None
         self.userID = None
+        self.passwd = passwd
 
     def getUserID(self):
         return self.userID
@@ -24,7 +25,9 @@ class User(object) :
             self.user = userName
             self.name = userName.upper()
             self.userID = userID
-            self.userHist = UD.getUserHistory(userID)
+            # self.userHist = UD.getUserHistory(userID)
+            # if len(self.userHist) == 0 : #no user history found
+            #     return -1
         # if userName.lower().strip() == "ajay":
         #     if passw.strip() == "11":
         #         self.user = userName
@@ -42,8 +45,10 @@ class User(object) :
         #print self.userHist
 
     def isUserLogedIn(self):
-        return UD.isUserActive(self.user, self.userID)
+        return UD.isUserActive(self.userID)
 
+    def createNewUser(self):
+        return UD.createNewUser(self.user,self.passwd)
 
 class UserProfile(User) :
     
@@ -61,7 +66,7 @@ class UserProfile(User) :
         #check if user history is updated? If yes, then create user profile again
         if userHistoryUpdated == 0 : #not updated
             status,data = UD.loadUserProfile(userID)
-            if not status : #could not load profile then create one
+            if not status : #could not load profile then create one or profile does not exist so create one
                 create = 1
             else : #successful in fetching userprofile
                 self.profile = data #set profile and return

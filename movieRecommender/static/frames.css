@@ -1,26 +1,29 @@
 #tabs
 {
-    width = 100;
+    width = 100%;
 }
 
 #frame1
 {
-    min-width: 273px;
+    height: 93vh;
+    min-width: 95px;
     float:left;
-    background-color: rgba(57,173,219,.25);
-    height:700px;
+    background-color: rgba(53, 53, 53, 0.7);
     width:15%;
 }
 
 #frame2
 {
-    min-width: 1000px;
-    width:85%;
+    background-color: rgba(0,0,0,0.3);
+    height: 100vh;
+    padding-left: 10px;
+    width: 84%;
+    float:left;
 }
 
 #options
 {
-       margin-top: 90px;
+        text-align: center;
 }
 
 .history
@@ -32,10 +35,8 @@
 
 .historyIcon
 {
-    margin-left: 109px;
     height: 64px;
     width: 64px;
-
 }
 
 .history span
@@ -57,5 +58,24 @@
 .show
 {
     display: block;
+}
+
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+
+html[xmlns] .clearfix {
+    display: block;
+}
+
+* html .clearfix {
+    height: 1%;
 }
 

@@ -44,16 +44,43 @@ def page_not_found(error):
 def home(name,userid) :
     return render_template('home.html',name=name,userid=userid)
 
-
+#route to load data for home page
 @app.route('/getHomePageData')
 def getHomePageData() :
     userID = request.args['userid']
     username = request.args['name']
     if RepresentsInt(userID) :
         status,data = getHomePageDetails(username,userID)
+        #if no history found for user
+        if status == -1 :
+            helpText = 'No movies history found. <br/> Please Click on Build/Update History to create one.'
+            return jsonify(status=status,data=helpText)
+        #if everything went fine
         if status :
             return jsonify(status=True, data=data)
         else :
-            return jsonify(status=False, data="No Such User Exists or is Logged In")
+            return jsonify(status=False, data="No Such User Exists or Logged In")
     else :
-        return jsonify(status=False, data="No Such User Exists or is Logged In")
+        return jsonify(status=False, data="No Such User Exists or Logged In")
+
+@app.route('/signup',methods=['GET'])
+def signup() :
+    return render_template('signup.html')
+
+@app.route('/createnewuser',  methods = ['POST'])
+def createnewuser():
+    user = request.form['username']
+    password = request.form['password']
+    status = createUser(user,password)
+    if status :
+        return redirect(url_for('login'))
+    else : #show error message
+        pass
+
+#signout route
+@app.route('/logout',methods=['GET'])
+def logout() :
+    url = request.url;
+    userID = url.replace('http://localhost:5000/logout?','').replace('=','')
+    userLogout(userID)
+    return redirect(url_for('login'))

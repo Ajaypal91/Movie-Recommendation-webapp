@@ -31,31 +31,31 @@ class createDatasetsForUser(object) :
         filesPath  = os.path.abspath(os.path.join(os.getcwd() + '/movieRecommender/Data/StoredObjects/'))
         self.createData = hp.createDataFramesAndIntialFeatureArray()
 
-        # #check if XCorpus exists
-        # filepath = filesPath + '/Xcorpus.npy'
-        # if os.path.isfile(filepath) :
-        #     #load XCorpus from file
-        #     fw = open(filepath,'r+')
-        #     self.createData.Xcorpus = np.load(fw)
-        #     fw.close()
-        # else : #I had already saved It so not creating it again
-        #     pass
-        #
-        # #load IDF for X Corpus
-        # filepath = filesPath + '/IDF.npy'
-        # if os.path.isfile(filepath):
-        #     # load IDF from file
-        #     fw = open(filepath, 'r+')
-        #     self.createData.IDF = np.load(fw)
-        #     fw.close()
-        # else : #IDF is already stored in the folder
-        #     pass
+        #check if XCorpus exists
+        filepath = filesPath + '/Xcorpus.npy'
+        if os.path.isfile(filepath) :
+            #load XCorpus from file
+            fw = open(filepath,'r+')
+            self.createData.Xcorpus = np.load(fw)
+            fw.close()
+        else : #I had already saved It so not creating it again
+            pass
+
+        #load IDF for X Corpus
+        filepath = filesPath + '/IDF.npy'
+        if os.path.isfile(filepath):
+            # load IDF from file
+            fw = open(filepath, 'r+')
+            self.createData.IDF = np.load(fw)
+            fw.close()
+        else : #IDF is already stored in the folder
+            pass
 
         #The following 3 lines are for creating IDF and Xcorpus from initial files. Commenting out these lines
         #initial filepath
-        filename = "MoviesLength.csv"
-        pathToFile = self.createData.getFilePath(filename)
-        self.createData.processData(pathToFile)
+        # filename = "MoviesLength.csv"
+        # pathToFile = self.createData.getFilePath(filename)
+        # self.createData.processData(pathToFile)
 
         #the userprofile is loaded
         self.usrPrf.createUserProfile(self.usr.userID, self.createData.getXcorpus(),self.usr.getUsrHist(),historyUpdated)

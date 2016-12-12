@@ -23,14 +23,19 @@
 
 <body onload="loadPage()">
 <h1 class="hide welcomeHeader" id={{userid}} > Welcome {{name}}</h1>
+<img src="{{ url_for('static', filename = 'Icons/bg.jpg') }}" class="background_image"/>
 <div id="errorDiv" class="hide">
     <span></span>
     <img class="too_sad" src="{{ url_for('static', filename = 'Icons/too_sad.png') }}"/>
 </div>
 
-<div id="tabs" class="hide">
+<form class="logout hide" action="/logout" method="get">
+    <button id="logout" name={{userid}} type="submit">Logout</button>
+</form>
 
-       <div id="frame1">
+<div id="tabs" class="hide clearfix">
+
+       <div id="frame1" class="hide">
             <div id="options">
 
                 <div class="history">
@@ -43,23 +48,34 @@
             </div>
        </div>
 
-        <div id="frame2">
+        <div id="frame2" class="hide">
 
-            <div id="movieListContainer">
-            <div class="tableHeading">
+            <div class="nohistorypresent hide">
+                <span></span>
+            </div>
+
+            <div class="tableHeading hide">
                 <span>Top 10 Recommendations</span>
             </div>
-            <table id="movieTable">
-                    <tr class="headerRow">
-                        <th>
-                            S.no.
-                        </th>
-                        <th>
-                            Movie
-                        </th>
-                    </tr>
+            <div id="movieListContainer" class="hide datagrid">
 
-            </table>
+                <table id="movieTable">
+                    <thead style="text-align: center;">
+                        <tr class="headerRow">
+                            <th>
+                                S.no.
+                            </th>
+                            <th>
+                                Movie
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+
+                </table>
 
             </div>
 

@@ -22,17 +22,9 @@ def checkAuthentication(user,password) :
     #authenticate User
     myUser = US.User()
     val = myUser.usrLogin(user,password)
+
     #if valid user saveUser and Load/create relevant data
     if val :
-        #save user
-        # saveUser(myUser)
-        #load/create data based on if history has been changed or not
-        # obj = loadData(myUser)
-        # global startCreation
-        # startCreation = obj
-        #return and display top 10 predictions for him
-        # result = createJsonData(startCreation.top10Pred)
-        # return jsonify(status=True,data=result,name=startCreation.usr.name)
         return True, myUser.name,myUser.userID
     else :
         return False,myUser.name,None
@@ -42,6 +34,11 @@ def checkAuthentication(user,password) :
 def loadData(myUser):
     #first check if history is updated or not
     threshold = 0.6
+    #check if user history is available or not
+    userHist = UD.getUserHistory(myUser.userID)
+    if len(userHist) == 0 : #user present but no user history found assist user to create new entries for history
+        return -1
+
     # 1 means updated 0 means not
     isUpdated = UD.isUserHistoryUpdated(myUser.userID)
     obj = CD.createDatasetsForUser(myUser)
@@ -56,6 +53,8 @@ def _loadUserFromID(myUser) :
 
 # #method to retrieve details for home page
 def getHomePageDetails(name,userID) :
+    #is user active?
+
     #create User Object
     myUser = US.User()
     #update its id
@@ -64,6 +63,9 @@ def getHomePageDetails(name,userID) :
     #if user is active load its details
     if _loadUserFromID(myUser) :
         obj = loadData(myUser)
+        if obj == -1 : #no history found
+            return -1,None
+        #continue with showing top 10 predictions
         data = ED.getMoviesFromIDs(obj.top10PredIDs)
         # global startCreation
         # startCreation = obj
@@ -79,3 +81,15 @@ def RepresentsInt(s):
         return True
     except ValueError:
         return False
+
+def createUser(user, passwd) :
+    # create User Object
+    myUser = US.User(user,passwd)
+    status = myUser.createNewUser()
+    if status :
+        return status
+    else : #display error message not able to create user #future work
+        pass
+
+def userLogout(userID) :
+    return UD.disableActive(userID)
