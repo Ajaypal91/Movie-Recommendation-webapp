@@ -1,0 +1,59 @@
+.fadeOutAnimation
+{
+    -webkit-animation: opacityTransition 2s; /* Safari 4.0 - 8.0 */
+    animation: opacityTransition 2s ;
+    -webkit-animation-timing-function: ease-out;
+}
+
+.fadeInAnimation
+{
+    -webkit-animation: opacityTransition 3; /* Safari 4.0 - 8.0 */
+    animation: opacityTransition 3s ;
+    -webkit-animation-timing-function: ease-in;
+    animation-direction: reverse;
+    -webkit-animation-direction: reverse; /* Safari 4.0 - 8.0 */
+}
+
+@keyframes opacityTransition {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+
+.welcomeHeader
+{
+    min-width:1200px;
+    color: #594977;
+    text-shadow: 0 0 10px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+
+.too_sad
+{
+    display: block;
+    margin: auto;
+}
+
+#errorDiv
+{
+    position: absolute;
+    width: 300px;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+
+table
+{
+    counter-reset:section;
+}
+
+.count:before
+{
+  counter-increment: section;      /* Increment the Serial counter */
+  content: counter(section); /* Display the counter */
+}

@@ -1,0 +1,30 @@
+1st col -- ID
+2nd Col -- Title
+3rd Col -- gener
+4th Col -- user rating (out of 20)
+5th col -- movie length
+6th Col -- critics rating (out of 5)
+7th Col -- how old is the movie from 1970 
+
+
+
+	* Action  - 0
+	* Adventure - 0.001
+	* Animation - 0.002
+	* Children's - 0.004
+	* Comedy - 0.008
+	* Crime - 0.016
+	* Documentary - 0.032 
+	* Drama - 0.064
+	* Fantasy - 0.128
+	* Film-Noir - 0.256
+	* Horror - 0.512
+	* Musical - 1.024
+	* Mystery - 2.048
+	* Romance - 4.096
+	* Sci-Fi - 8.192
+	* Thriller - 16.384
+	* War - 32.768
+	* Western - 65.536
+
+8606 id deleted does not conta

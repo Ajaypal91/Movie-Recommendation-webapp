@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="Home Page">
+     <meta name="author" content="Ajay">
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
+     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+
+     <script type = "text/javascript"   src = "{{ url_for('static', filename = 'nprogress.js') }}"></script>
+     <script type = "text/javascript"   src = "{{ url_for('static', filename = 'home/home.js') }}" ></script>
+     <link href="{{ url_for('static', filename = 'frames.css') }}" rel="stylesheet">
+     <link href="{{ url_for('static', filename = 'nprogress.css') }}" rel="stylesheet">
+     <link href="{{ url_for('static', filename = 'home/home.css') }}" rel="stylesheet">
+
+<head>
+    <title>Home</title>
+
+</head>
+
+
+<body onload="loadPage()">
+<h1 class="hide welcomeHeader" id={{userid}} > Welcome {{name}}</h1>
+<div id="errorDiv" class="hide">
+    <span></span>
+    <img class="too_sad" src="{{ url_for('static', filename = 'Icons/too_sad.png') }}"/>
+</div>
+
+<div id="tabs" class="hide">
+
+       <div id="frame1">
+            <div id="options">
+
+                <div class="history">
+                    <img class="historyIcon" src="{{ url_for('static', filename = 'Icons/historyIcon.png') }}" alt="Smiley face"/>
+                    <span>History</span>
+                </div>
+
+
+
+            </div>
+       </div>
+
+        <div id="frame2">
+
+            <div id="movieListContainer">
+            <div class="tableHeading">
+                <span>Top 10 Recommendations</span>
+            </div>
+            <table id="movieTable">
+                    <tr class="headerRow">
+                        <th>
+                            S.no.
+                        </th>
+                        <th>
+                            Movie
+                        </th>
+                    </tr>
+
+            </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

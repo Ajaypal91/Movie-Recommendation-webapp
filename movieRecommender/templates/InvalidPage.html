@@ -1,0 +1,39 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTMl>
+<html>
+<head>
+<title>404</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href= "{{ url_for('static', filename = 'style.css') }}" type="text/css" media="all" />
+<link href='http://fonts.googleapis.com/css?family=Strait' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
+	<script>
+
+		function smileyClicked() {
+			$('#smiley').attr('src',"{{ url_for('static', filename = 'Icons/confused.gif') }}");
+			$('#smiley')[0].title = "You are stupid"
+			$('.stop').show().css('display','block');
+		}
+
+	</script>
+
+</head>
+<body>
+	
+			<div class="wrap">
+				<div class="banner"><img src="{{ url_for('static', filename = 'Icons/fuel-404-logo.png') }}" alt="" /></div>
+                <div class="content">
+			    <h1 style="padding: 30px 0px 0px 0px;">Movie Not Found!!!</h1>
+                <img id="smiley" src="{{ url_for('static', filename = 'Icons/sadSmiley.gif') }}" title="Don't Click Me!"  onclick="smileyClicked()"/>
+				<span class="stop" style="display:none; font-size: 30px; color: #d64313; ">I can't help you..</span>
+                </div>
+			</div>
+	    	
+</body>
+</html>    
+
