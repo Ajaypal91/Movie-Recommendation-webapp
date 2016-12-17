@@ -5,7 +5,8 @@
 
 #frame1
 {
-    height: 93vh;
+    height: auto;
+    margin-top: 76px;
     min-width: 95px;
     float:left;
     background-color: rgba(53, 53, 53, 0.7);
@@ -14,8 +15,8 @@
 
 #frame2
 {
-    background-color: rgba(0,0,0,0.3);
-    height: 100vh;
+
+    height: auto;
     padding-left: 10px;
     width: 84%;
     float:left;
@@ -26,11 +27,39 @@
         text-align: center;
 }
 
-.history
+.optionstyle
 {
     cursor: pointer;
     padding-bottom: 15px;
     display: block;
+    -moz-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	box-shadow:inset 0px 1px 0px 0px #7a8eb9;
+	background-color:transparent;
+	border:2px solid #515656;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:25px;
+	font-weight:bold;
+	text-decoration:none;
+	width: 98%;
+    height: 58px;
+    padding-top: 50px;
+
+}
+
+
+.optionstyle:hover {
+		background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5972a7), color-stop(1, #637aad));
+	background:-moz-linear-gradient(top, #5972a7 5%, #637aad 100%);
+	background:-webkit-linear-gradient(top, #5972a7 5%, #637aad 100%);
+	background:-o-linear-gradient(top, #5972a7 5%, #637aad 100%);
+	background:-ms-linear-gradient(top, #5972a7 5%, #637aad 100%);
+	background: linear-gradient(to bottom, #858a96 5%, #929294 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5972a7', endColorstr='#637aad',GradientType=0);
+	background-color:#5972a7;
 }
 
 .historyIcon
@@ -39,7 +68,7 @@
     width: 64px;
 }
 
-.history span
+.optionstyle span
 {
     display: block;
     color: #fff;

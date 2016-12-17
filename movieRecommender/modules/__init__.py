@@ -36,6 +36,7 @@ def loadData(myUser):
     threshold = 0.6
     #check if user history is available or not
     userHist = UD.getUserHistory(myUser.userID)
+    myUser.userHist = userHist
     if len(userHist) == 0 : #user present but no user history found assist user to create new entries for history
         return -1
 
@@ -66,7 +67,7 @@ def getHomePageDetails(name,userID) :
         if obj == -1 : #no history found
             return -1,None
         #continue with showing top 10 predictions
-        data = ED.getMoviesFromIDs(obj.top10PredIDs)
+        data = ED.getMoviesFromIndex(obj.top10PredIDs)
         # global startCreation
         # startCreation = obj
         # # return and display top 10 predictions for him
@@ -93,3 +94,16 @@ def createUser(user, passwd) :
 
 def userLogout(userID) :
     return UD.disableActive(userID)
+
+def getHistoryForUser(userID,batchno) :
+    myUser = US.User()
+    myUser.userID = userID
+    return myUser.getHistoryForUser(batchno)
+
+def getSearchResults(searchText,batchno):
+    return ED.getSearchResults(searchText,batchno)
+
+def updatehistoryForUser(userID,movieID,liking) :
+    myUser = US.User()
+    myUser.userID = userID
+    return myUser.updateHistory(movieID,liking)

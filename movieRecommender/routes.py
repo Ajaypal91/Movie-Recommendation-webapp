@@ -84,3 +84,43 @@ def logout() :
     userID = url.replace('http://localhost:5000/logout?','').replace('=','')
     userLogout(userID)
     return redirect(url_for('login'))
+
+#history route
+@app.route('/history',methods=['GET'])
+def getHistory() :
+    userID = request.args['userid']
+    batchno = request.args['batchno']
+    status,data,batches = getHistoryForUser(userID,batchno)
+    # if no history found for user
+    if status == -1:
+        helpText = 'No movies history found. <br/> Please Click on Build/Update History to create one.'
+        return jsonify(status=status, data=helpText,nobatches=batches)
+    else :
+        return jsonify(status=status, data=data, nobatches=batches)
+
+
+#search api
+@app.route('/search',methods=['GET'])
+def search():
+    searchText = request.args['searchtext']
+    batchno = request.args['batchno']
+    status, data, batches = getSearchResults(searchText, batchno)
+    if not status :
+        errorMsg = 'No result found'
+        return jsonify(status=-1,data=errorMsg,nobatches=0)
+    else :
+        return jsonify(status=status, data=data, nobatches=batches)
+
+#updatehistory for the user
+@app.route('/updatehistory',methods=['GET'])
+def updatehistory():
+    userid = request.args['userid']
+    movieid = request.args['movieid']
+    liking = request.args['liking']
+    status = updatehistoryForUser(userid,movieid,liking)
+
+    if status :
+        return jsonify(status=status)
+    else :
+        errMsg = 'Something went wrong. Could not update the history'
+        return jsonify(status=status,data=errMsg)

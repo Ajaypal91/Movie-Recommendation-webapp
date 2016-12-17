@@ -1,6 +1,8 @@
 import  movieRecommender.DAO as DB
 import pandas as pd
 import cPickle as pickle
+import json
+import movieRecommender.DAO.engineDAO as ED
 
 #get User history
 def getUserHistory(userId,histFormat='dataframe') :
@@ -61,7 +63,7 @@ def isUserHistoryUpdated(userID) :
 #fucntion not used yet
 def updateUserHistory(userID,hist=None):
     db = DB.getDBConnection()
-    status = db.query_formatted('update user_data set historyupdated=0 where id=%s', [userID])
+    status = db.query_formatted('update user_data set historyupdated=1 where id=%s', [userID])
     if status : #update was successful
         #update history if exists
         if hist != None :
@@ -90,7 +92,11 @@ def loadUserProfile(userID) :
 
 def updateUserProfile(userID,profile) :
     db = DB.getDBConnection()
-    status = db.query_formatted('update user_data set userprofile=%s where id=%s', [profile,userID])
+    profile = pickle.dumps(profile)
+    # quer = "update user_data set userprofile=%s where id=%s" % (profile,userID)
+    # status = db.query(quer)
+    db.update('user_data',row={'id':userID},userprofile=profile)
+    status = db.query_formatted('update user_data set historyupdated=0 where id=%s', [userID])
     return status
 
 def createNewUser(username,passwrd) :
@@ -117,6 +123,81 @@ def createNewUser(username,passwrd) :
 def disableActive(userID) :
     db = DB.getDBConnection()
     status = db.query_formatted('update users set isactive=%s where id=%s', ['0', userID])
+    return status
+
+def getHistoryForUser(userid,batchno) :
+    hist = getUserHistory(userid,histFormat='json')
+
+    #if no history is present
+    if len(hist) == 0 :
+        return -1,hist,0 #return status = -1, data as hist, and 0 as number of batches
+
+    decoder = json.JSONDecoder()
+    hist_json = decoder.decode(hist)
+
+    #get list of movies from user history
+    idsList = []
+    for x in hist_json :
+        idsList.append(int(x['id']))
+
+    #get list of movies
+    moviesList = ED.getMoviesFromIDs(idsList)
+
+    #create final data list of dictonaries/json
+    final_data = []
+    for x, y in zip(hist_json, moviesList):
+        final_data.append({'id': x['id'], 'name': y['name'], 'liking': x['liking']})
+
+
+    batches = len(final_data) / 10  if  (len(final_data)%10 == 0)  else  len(final_data) / 10 + 1
+    batchno = int(batchno)
+    if batches >= int(batchno) :
+        return True,final_data[(batchno-1)*10:batchno*10],batches #return status, that batch of history and number of batches
+
+
+def updateHistory(userID, movieID,liking):
+    hist = getUserHistory(userID, histFormat='json')
+
+
+    histData = {}
+    histData["id"] = movieID
+    histData["liking"] = liking
+
+    status = False
+
+    #if history is empty
+    if len(hist) == 0 :
+        updatedHist = []
+        updatedHist.append(histData)
+        encoder = json.JSONEncoder()
+        updatedHist = encoder.encode(updatedHist)
+        #update the tables
+        status = updateUserHistory(userID,updatedHist)
+    else :
+        decoder = json.JSONDecoder()
+        hist_json = decoder.decode(hist)
+        movieIDPresent = False
+        #check if movie id is already present and liking is same
+        for x in hist_json :
+            if x['id'] == movieID :
+                if x['liking'] != liking :
+                    x['liking'] = liking
+                    movieIDPresent = -1
+                else :
+                    movieIDPresent = True
+        status = True
+        #if not present add the entry
+        if not movieIDPresent :
+            hist_json.append(histData)
+            encoder = json.JSONEncoder()
+            updatedHist = encoder.encode(hist_json)
+            status = updateUserHistory(userID, updatedHist)
+
+        if movieIDPresent == -1 :
+            encoder = json.JSONEncoder()
+            updatedHist = encoder.encode(hist_json)
+            status = updateUserHistory(userID, updatedHist)
+
     return status
 
 

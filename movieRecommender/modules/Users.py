@@ -39,16 +39,22 @@ class User(object) :
         # else:
         #     return False
 
-    def _loadUserProfile(self) :
-        path = os.getcwd() + "/movieRecommender/Data/Histories/%s_hist.csv" %self.name.lower()
-        self.userHist = pd.read_csv(path,names=["MovieID","LD"]).as_matrix()
-        #print self.userHist
+    # def _loadUserProfile(self) :
+    #     path = os.getcwd() + "/movieRecommender/Data/Histories/%s_hist.csv" %self.name.lower()
+    #     self.userHist = pd.read_csv(path,names=["MovieID","LD"]).as_matrix()
+    #     #print self.userHist
 
     def isUserLogedIn(self):
         return UD.isUserActive(self.userID)
 
     def createNewUser(self):
         return UD.createNewUser(self.user,self.passwd)
+
+    def getHistoryForUser(self,batchno):
+        return UD.getHistoryForUser(self.userID,batchno)
+
+    def updateHistory(self,movieID,liking):
+        return UD.updateHistory(self.userID,movieID,liking)
 
 class UserProfile(User) :
     
@@ -73,11 +79,12 @@ class UserProfile(User) :
                 return
 
         #else create new profile
+        x = np.array(userHist)
         @np.vectorize
-        def selected(elem) : return elem in userHist[:,0]
+        def selected(elem) : return elem in x[:,0]
         XforUsers = Xcorpus[selected(Xcorpus[:,0])]
         #print XforUsers
-        userProfile = userHist[:,1].T.dot(XforUsers[:,1:])
+        userProfile = x[:,1].T.dot(XforUsers[:,1:])
         self.profile = userProfile
         UD.updateUserProfile(userID,self.profile)
 
