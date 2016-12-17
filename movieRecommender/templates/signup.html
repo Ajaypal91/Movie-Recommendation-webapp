@@ -1,0 +1,45 @@
+<html>
+<head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="Login Page">
+     <meta name="author" content="Ajay">
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+
+
+     <script type = "text/javascript"   src = "{{ url_for('static', filename = 'nprogress.js') }}" ></script>
+     <script type = "text/javascript"   src = "{{ url_for('static', filename = 'signup.js') }}" ></script>
+     <link href="{{ url_for('static', filename = 'main.css') }}" rel="stylesheet">
+
+     <link href="{{ url_for('static', filename = 'nprogress.css') }}" rel="stylesheet">
+
+        <title>Register</title>
+
+     </head>
+   <body onload="bindEvents()">
+
+
+
+   <div id="loader1" style="display=none;"></div>
+   <!--<div id="loader2" style="display=none;"></div>-->
+
+   <div class="loginContainer">
+       <h1 class="form-signin-heading">Register</h1>
+
+       <form class="form-signin" action="/createnewuser" method="post" >
+
+             <input id = "txtUsername" name="username" class="form-control" placeholder="Username" required autofocus>
+             <input id="txtPassword" type="password" name="password" class="form-control" placeholder="Password" required>
+             <input id="confirmtxtPassword" type="password" name="password" class="form-control" placeholder="Confirm Password" required>
+             <button id="loginButton" class="btn btn-large btn-primary btn-block" type="submit">Login </button>
+
+       </form>
+   </div>
+
+
+
+
+   </body>
+</html>

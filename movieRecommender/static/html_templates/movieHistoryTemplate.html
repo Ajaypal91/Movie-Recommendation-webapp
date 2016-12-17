@@ -1,0 +1,11 @@
+<tr id="${id}">
+    <td class="count">
+        ${$index}
+    </td>
+    <td>
+        ${name}
+    </td>
+    <td style="text-align: center; line-height: 1px;">
+        <img {{if liking == -1}} src="../../static/Icons/cross.png" title="Movie disliked" {{else}} src="../../static/Icons/check.png" title="Movie liked" {{/if}} />
+    </td>
+</tr>

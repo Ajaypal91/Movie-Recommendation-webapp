@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="Home Page">
+     <meta name="author" content="Ajay">
+     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> </script>
+     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+
+     <script type = "text/javascript"   src = "{{ url_for('static', filename = 'nprogress.js') }}"></script>
+     <script type = "text/javascript"   src = "{{ url_for('static', filename = 'home/home.js') }}" ></script>
+     <link href="{{ url_for('static', filename = 'frames.css') }}" rel="stylesheet">
+     <link href="{{ url_for('static', filename = 'nprogress.css') }}" rel="stylesheet">
+     <link href="{{ url_for('static', filename = 'home/home.css') }}" rel="stylesheet">
+
+<head>
+    <title>Home</title>
+
+</head>
+
+
+<body onload="loadPage()">
+<h1 class="hide welcomeHeader" id={{userid}} > Welcome {{name}}</h1>
+<img src="{{ url_for('static', filename = 'Icons/bg3.jpg') }}" class="background_image"/>
+
+<div id="errorDiv" class="hide">
+    <span></span>
+    <img class="too_sad" src="{{ url_for('static', filename = 'Icons/too_sad.png') }}"/>
+</div>
+
+<div class="confirm hide">
+  <h1>Teach Me</h1>
+  <p>Did you <strong>liked</strong> the Movie?</p>
+  <button onclick="updateHistory(event)">No</button>
+  <button onclick="updateHistory(event)" autofocus>Yes</button>
+</div>
+
+<div class="historyconfirm hide">
+  <h1>Watchlist updated</h1>
+  <p>Thanks for teaching me</p>
+  <button onclick="okayClicked(event)">Okay</button>
+</div>
+
+<form class="logout hide" action="/logout" method="get">
+    <button id="logout" name={{userid}} type="submit">Logout</button>
+</form>
+
+<div id="tabs" class="hide clearfix">
+
+       <div id="frame1" class="hide">
+            <div id="options">
+
+                <div class="history optionstyle" onclick="getUserHistory(event)">
+                    <!--<img class="historyIcon" src="{{ url_for('static', filename = 'Icons/historyIcon.png') }}" alt="Smiley face"/>-->
+                    <span>History</span>
+                </div>
+                <div class="historyupdate optionstyle" onclick="buildHistoryClicked()">
+                    <!--<img class="historyIcon" src="{{ url_for('static', filename = 'Icons/historyIcon.png') }}" alt="Smiley face"/>-->
+                    <span>Build/Update History</span>
+                </div>
+                <div class="recommendmovie optionstyle" onclick="loadData()">
+                    <!--<img class="historyIcon" src="{{ url_for('static', filename = 'Icons/historyIcon.png') }}" alt="Smiley face"/>-->
+                    <span>Recommend Movie</span>
+                </div>
+                <div class="filterrecommend optionstyle">
+                    <!--<img class="historyIcon" src="{{ url_for('static', filename = 'Icons/historyIcon.png') }}" alt="Smiley face"/>-->
+                    <span>Recommend Movie Based On Filter</span>
+                </div>
+                <div class="searchmovie optionstyle" onclick="searchClicked()">
+                    <!--<img class="historyIcon" src="{{ url_for('static', filename = 'Icons/historyIcon.png') }}" alt="Smiley face"/>-->
+                    <span>Search Movie</span>
+                </div>
+
+            </div>
+       </div>
+
+        <div id="frame2" class="hide">
+
+            <div id="search" class="hide">
+                <h1 style="font-size: 27px;text-align: center;color: #ffe2e2;margin: 0px;"></h1>
+                <form id="searchform" style="padding-top: 15px;">
+                    <input id = "searchbox" name="searchtext" class="form-control" placeholder="search movie (atleast 3 characters required)" autofocus required>
+                    <button id="searchbutton" class="btn btn-large btn-primary btn-block" type="submit">Login </button>
+                </form>
+            </div>
+
+            <div class="nosearchresult hide">
+                <span></span>
+            </div>
+
+            <div class="nohistorypresent hide">
+                <span></span>
+            </div>
+
+            <div class="tableHeading hide">
+                <span></span>
+            </div>
+            <div id="movieListContainer" class="hide datagrid">
+
+                <table id="movieTable">
+                    <thead style="text-align: center;">
+                        <tr class="headerRow">
+                            <th>
+                                S.no.
+                            </th>
+                            <th>
+                                Movie
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div id="historyListContainer" class="hide datagrid">
+
+                <table id="historyTable">
+                    <thead style="text-align: center;">
+                        <tr class="headerRow">
+                            <th style="width:10%;">
+                                S.no.
+                            </th>
+                            <th style="width:80%;">
+                                Movie
+                            </th>
+                            <th style="width:10%;">
+                                Like/Dislike
+                            </th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                          <tr>
+                            <td colspan="3">
+                              <div class="paging">
+                                <ul>
+
+                                </ul>
+                              </div>
+                          </tr>
+                    </tfoot>
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+             <div id="searchListContainer" class="hide datagrid">
+
+                <table id="searchTable">
+                    <thead style="text-align: center;">
+                        <tr class="headerRow">
+                            <th style="width:10%;">
+                                S.no.
+                            </th>
+                            <th style="width:90%;">
+                                Movie
+                            </th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                          <tr>
+                            <td colspan="2">
+                              <div class="paging">
+                                <ul>
+
+                                </ul>
+                              </div>
+                          </tr>
+                    </tfoot>
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
