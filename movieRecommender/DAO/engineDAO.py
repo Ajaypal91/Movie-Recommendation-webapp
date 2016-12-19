@@ -10,6 +10,7 @@ def getMoviesFromIndex(movieIDs) :
         movieIDs = tuple(movieIDs)
         quer = 'select * from idmovietable where index in %s' %str(movieIDs)
     result = db.query(quer)
+    db.close()
     return result.dictresult()
 
 #function to retrieve movies belonging to list of IDS
@@ -22,6 +23,7 @@ def getMoviesFromIDs(movieIDs) :
         movieIDs = tuple(movieIDs)
         quer = 'select * from idmovietable where id in %s' %str(movieIDs)
     result = db.query(quer)
+    db.close()
     return result.dictresult()
 
 #get movies from search text
@@ -32,7 +34,7 @@ def getSearchResults(searchText,batchno):
     result  = db.query(querstr)
 
     final_data = result.dictresult()
-
+    db.close()
     #if no search result found
     if len(final_data) == 0 :
         return False,final_data,0

@@ -391,6 +391,7 @@ function closePopUp()
 
 function updateHistory(ev) {
 
+    NProgress.start();
     self = $(ev.toElement);
     liking = 1;
 

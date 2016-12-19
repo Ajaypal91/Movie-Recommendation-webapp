@@ -10,6 +10,7 @@ def getUserHistory(userId,histFormat='dataframe') :
     db = DB.getDBConnection()
     quer = 'select history from user_data where id=%s' %str(userId)
     hist = db.query(quer)
+    db.close()
     if len(hist.getresult()) > 0:
         hist_json = hist.dictresult()[0]['history']
 
@@ -27,6 +28,7 @@ def getUserHistory(userId,histFormat='dataframe') :
 def authenticateUser(userName,password) :
     db = DB.getDBConnection()
     result = db.query_formatted('select id from users where username=%s AND password=%s', (userName, password))
+    db.close()
     if len(result.getresult()) > 0 :
         userID = result.getresult()[0][0]
         status = _updateIsActive(userID)
@@ -42,12 +44,14 @@ def authenticateUser(userName,password) :
 def _updateIsActive(userID) :
     db = DB.getDBConnection()
     status = db.query_formatted('update users set isactive=1 where id=%s', [userID])
+    db.close()
     return status
 
 def isUserActive(userID) :
     db = DB.getDBConnection()
     result = db.query_formatted('select id from users where id=%s AND isactive=%s', [userID,'1'])
     isActive = 0
+    db.close()
     if len(result.getresult()) > 0:
         isActive = result.getresult()[0][0]
     return isActive
@@ -55,6 +59,7 @@ def isUserActive(userID) :
 def isUserHistoryUpdated(userID) :
     db = DB.getDBConnection()
     result = db.query_formatted('select historyupdated from user_data where id=%s', [userID])
+    db.close()
     if len(result.getresult()) > 0:
         return result.getresult()[0][0]
     #if could not find the result just send that history is updated so that the data can be recreated
@@ -68,18 +73,22 @@ def updateUserHistory(userID,hist=None):
         #update history if exists
         if hist != None :
             status = db.query_formatted('update user_data set history=%s where id=%s', [hist,userID])
+            db.close()
             if status : #update was successful
                 return True
             else :
                 return False
         else :
+            db.close()
             return True
     else :
+        db.close()
         return False
 
 def loadUserProfile(userID) :
     db = DB.getDBConnection()
     result = db.query_formatted('select userprofile from user_data where id=%s', [userID])
+    db.close()
     if len(result.getresult()) > 0:
         dataString =  result.getresult()[0][0]
         #if userprofile exists
@@ -97,6 +106,7 @@ def updateUserProfile(userID,profile) :
     # status = db.query(quer)
     db.update('user_data',row={'id':userID},userprofile=profile)
     status = db.query_formatted('update user_data set historyupdated=0 where id=%s', [userID])
+    db.close()
     return status
 
 def createNewUser(username,passwrd) :
@@ -113,16 +123,19 @@ def createNewUser(username,passwrd) :
             userID = result.getresult()[0][0]
             #create entry in userdata table with default values
             status = db.query_formatted('insert into user_data(id,history,historyupdated,userprofile) values(%s,%s,%s,%s)',[userID, '', '0',''])
+            db.close()
             return bool(status)
         else :
+            db.close()
             return False
-
+    db.close()
     return status
 
 #method to logout the user
 def disableActive(userID) :
     db = DB.getDBConnection()
     status = db.query_formatted('update users set isactive=%s where id=%s', ['0', userID])
+    db.close()
     return status
 
 def getHistoryForUser(userid,batchno) :
