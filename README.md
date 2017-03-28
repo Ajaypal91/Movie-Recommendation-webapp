@@ -21,7 +21,7 @@ Home Page
 ![Alt text](/ScreenShots/userHomePage.png?raw=true "Home Page")
 
 History Page
-![Alt text](/ScreenShots/userHomePage.png?raw=true "User History Page")
+![Alt text](/ScreenShots/userHistoryPage.png?raw=true "User History Page")
 
 
 Build User History Page
