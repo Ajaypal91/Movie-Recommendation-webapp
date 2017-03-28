@@ -13,18 +13,18 @@ Just run the run.py file. It will host a webserver and the login page can be acc
 
 <h1>USER INTERFACE</h1> 
 
-<h2> Login Page </h2>
+Login Page
 
 ![Alt text](/ScreenShots/loginPage.png?raw=true "Login Page")
 
-<h2> Home Page </h2>
+Home Page
 ![Alt text](/ScreenShots/userHomePage.png?raw=true "Home Page")
 
-<h2>History Page</h2>
+History Page
 ![Alt text](/ScreenShots/userHomePage.png?raw=true "User History Page")
 
 
-<h2>Build User History Page</h2>
+Build User History Page
 ![Alt text](/ScreenShots/UserHistoryBuildPage.png?raw=true "Build User History Page")
 
 <h1>TESTING</h1>
