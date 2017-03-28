@@ -15,8 +15,7 @@ Just run the run.py file. It will host a webserver and the login page can be acc
 
 <h2> Login Page </h2>
 
-https://github.com/Ajaypal91/Movie-Recommendation-webapp/blob/master/ScreenShots/loginPage.png
-
+![Alt text](/ScreenShots/loginPage.png?raw=true "Login Page")
 
 <h2> Home Page </h2>
 ![Alt text](/ScreenShots/userHomePage.png?raw=true "Home Page")
