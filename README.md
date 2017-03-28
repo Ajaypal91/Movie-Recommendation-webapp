@@ -23,6 +23,7 @@ Just run the run.py file. It will host a webserver and the login page can be acc
 <h2>History Page</h2>
 ![Alt text](/ScreenShots/userHomePage.png?raw=true "User History Page")
 
+
 <h2>Build User History Page</h2>
 ![Alt text](/ScreenShots/UserHistoryBuildPage.png?raw=true "Build User History Page")
 
