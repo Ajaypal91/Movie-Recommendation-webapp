@@ -6,14 +6,15 @@ The movie recommendation app uses the concept of content based filtering, neural
 
 <h1>Technologies used</h1>
 
-1 Python 2.7
-2 Flask 
-3 PostgreSql 
-4 jQuery
-5 HTML5
-6 CSS3
-7 JavaScript
-Different Packages Needed: Python's sklearn, scikit, flask, pandas, numpy
+1 Python 2.7</br>
+2 Flask </br>
+3 PostgreSql </br>
+4 jQuery</br>
+5 HTML5</br>
+6 CSS3</br>
+7 JavaScript</br>
+Different Packages Needed: Python's sklearn, scikit, flask, pandas, numpy</br>
+
 Postgresql Database is uploaded on a cloud
 
 <h1>How it works / Technical Details</h1>
