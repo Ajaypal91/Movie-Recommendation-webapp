@@ -81,7 +81,11 @@ def createnewuser():
 @app.route('/logout',methods=['GET'])
 def logout() :
     url = request.url;
-    userID = url.replace('http://localhost:5000/logout?','').replace('=','')
+    userID = None
+    if 'localhost' in url:
+        userID = url.replace('http://localhost:5000/logout?','').replace('=','')
+    if '127.0.0.1' in url:
+        userID = url.replace('http://127.0.0.1:5000/logout?', '').replace('=', '')
     userLogout(userID)
     return redirect(url_for('login'))
 
